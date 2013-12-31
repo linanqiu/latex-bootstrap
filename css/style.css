@@ -1,0 +1,452 @@
+/* FONT DECLARATIONS
+   Uses the web-port of Computer Modern Serif from http://checkmyworking.com/cm-web-fonts/
+   SVG format is declared first to exploit better subpixel-antialiasing in Chrome until
+   the Canary build of the new type rendering engine is made available
+*/
+
+/* Normal Normal */
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'cms';
+  src:  url('../fonts/cmunrm.eot');
+  src:  url('../fonts/cmunrm.svg#cmunrm') format('svg'),
+        url('../fonts/cmunrm.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/cmunrm.woff')       format('woff'),
+        url('../fonts/cmunrm.ttf')        format('truetype');
+}
+
+/* Normal Italic */
+@font-face {
+  font-weight: normal;
+  font-style: italic;
+  font-family: 'cms';
+  src:  url('../fonts/cmunti.eot');
+  src:  url('../fonts/cmunti.svg#cmunti') format('svg'),
+        url('../fonts/cmunti.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/cmunti.woff')       format('woff'),
+        url('../fonts/cmunti.ttf')        format('truetype');
+}
+
+/* Bold Normal */
+@font-face {
+  font-weight: bold;
+  font-style: normal;
+  font-family: 'cms';
+  src:  url('../fonts/cmunbx.eot');
+  src:  url('../fonts/cmunbx.svg#cmunbx') format('svg'),
+        url('../fonts/cmunbx.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/cmunbx.woff')       format('woff'),
+        url('../fonts/cmunbx.ttf')        format('truetype');
+}
+
+/* Bold Italic */
+@font-face {
+  font-weight: bold;
+  font-style: italic;
+  font-family: 'cms';
+  src:  url('../fonts/cmunbi.eot');
+  src:  url('../fonts/cmunbi.svg#cmunbi') format('svg'),
+        url('../fonts/cmunbi.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/cmunbi.woff')       format('woff'),
+        url('../fonts/cmunbi.ttf')        format('truetype');
+}
+
+/* LAYOUT */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Resets the browser shadow DOM for the main HTML element */
+  margin: 0;
+  padding: 0;
+
+  /* Future-proof setting for Firefox support for font-size adjustment */
+  font-size-adjust: auto;
+
+  /* Set the base font-size to 10px for easy em/rem calculations */
+  font-size: 10px;
+
+  /* Set the font-family to Computer Modern Serif */
+  font-family: 'cms';
+
+  /* Font Quirks and Specifications */
+  text-rendering:         optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -ms-font-smoothing:     antialiased;
+  -o-font-smoothing:      antialiased;
+  font-smoothing:         antialiased;
+
+  /* Ligature and OpenType Settings */
+  -moz-font-feature-settings:     "liga=1, dlig=1";
+  -ms-font-feature-settings:      "liga", "dlig";
+  -webkit-font-feature-settings:  "liga", "dlig";
+  -o-font-feature-settings:       "liga", "dlig";
+  font-feature-settings:          "liga", "dlig";
+}
+
+body {
+  margin-bottom: 11.642rem;
+  counter-reset: section-counter;
+}
+
+section {
+  /* Set the width to some arbitrary value that looks good */
+  width: 55.6%;
+
+  /* Set left and right margins to auto to centralize the section block --- this only works when width is specified */
+  margin: 0 auto;
+
+  /* A subsection starts from 1 within each section */
+  counter-reset: subsection-counter;
+
+  /* A figure starts from 1 within each section */
+  counter-reset: figure-counter;
+}
+
+/* TYPOGRAPHY */
+h1,h2,h3,h4,h5,h6,p,blockquote {
+  /* Reset the browser shadow DOM for all typographic elements */
+  margin: 0;
+  padding: 0;
+
+  /* Force the font-size of all typographic elements to be identical
+     This allows semantic designation of content hierarchy because it allows/forces us to set font-size using classes instead
+  */
+  font-size: 10px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  /* Header elements have a slightly darker color for emphasis */
+  color: #333;
+}
+
+h1 {
+  /* Every section header increments the section count */
+  counter-increment: section-counter;
+}
+
+/* Displays the section count next to every h1 element */
+h1:not(.no-count):before {
+  margin-right: 1.664rem;
+  content: counter(section-counter);
+}
+
+h2 {
+  /* Every subsection header increments the subsection count */
+  counter-increment: subsection-counter;
+}
+
+/* Displays the subsection count next to every h2 element */
+h2:before {
+  margin-right: 1.563rem;
+  content: counter(section-counter) "." counter(subsection-counter);
+}
+
+p,ul,ol {
+  /* Paragraph elements have an off-black color because using #000 (true black) is undesirable */
+  color: #444;
+
+  /* Font-size here is calculated from an ideal font-size of 10px using a major-thirds typographical rhythm */
+  font-size: 1.664rem;
+  line-height: calc(1.664*1.618/2);
+
+  /* Force the top margin to 0 again to suppress the shadow DOM */
+  margin-top: 0;
+
+  /* Set a bottom margin equal to the font-size on the paragraph element to maintain the page rhythm */
+  margin-bottom: calc(1.664rem*1.618);
+
+  /* Set the word-break specifications to produce a better ragged edge */
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+
+  /* Hyphenation settings for words/layouts/dictionaries which permit it */
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+
+  /* Print-only settings that prevent widows from occurring when hyphenation is applied */
+  -webkit-hyphenate-before: 2;
+  -webkit-hyphenate-after: 3;
+  hyphenate-lines: 3;
+}
+
+p+*:not(h1):not(h2) {
+  margin-top: calc(1.664rem*-1.618/2);
+}
+
+p+p {
+  text-indent:calc(1.664rem*1.618);
+}
+
+/* FONT-SIZE HELPERS
+   Created using http://modularscale.com/scale/?px1=10&px2=26&ra1=1.25&ra2=0
+*/
+.font--size__h1 {
+  font-size: 2.6rem;
+  line-height: 1;
+  margin-bottom: calc(2.6rem/1.618);
+}
+
+.font--size__h2 {
+  font-size: 1.953rem;
+  line-height: 1;
+  margin-bottom: calc(1.953rem/1.618);
+}
+
+/* Abstract Block Helpers */
+.abstract {
+  width: calc(55.6%*0.75);
+}
+
+.abstract:before {
+  display: block;
+  text-align: center;
+  content: "ABSTRACT";
+  font-size: 1.563rem;
+  font-weight: bold;
+  margin-bottom: calc(1.563rem/1.618);
+}
+
+.abstract p {
+  font-weight: bold;
+  font-size: 1.563rem;
+}
+
+/* Acknowledgments Block Helpers */
+.acknowledgments:before {
+  display: block;
+  text-align: center;
+  content: "Acknowledgments";
+  font-size: 1.953rem;
+  font-weight: bold;
+  margin-bottom: calc(1.953rem/1.618);
+}
+
+/* Bibliography Block Helpers */
+.bibliography {
+  counter-reset: ref-counter;
+}
+
+.bibliography:before {
+  display: block;
+  text-align: center;
+  content: "References";
+  font-size: 1.953rem;
+  font-weight: bold;
+  margin-bottom: calc(1.563rem/1.618);
+}
+
+.bibliography ol {
+  padding: 0;
+  list-style: none;
+  display: table;
+}
+
+.bibliography li {
+  counter-increment: ref-counter;
+  display: table-row;
+}
+
+.bibliography li:before {
+  display: table-cell;
+  width: 3rem;
+  content: "[" counter(ref-counter) "]";
+  margin-right: 1.664rem;
+}
+
+/* Title Block Helpers */
+.maketitle {
+  margin-top: 11.642rem;
+  margin-bottom: 7.451rem;
+}
+
+.title,.author,.date {
+  /* Forces every line to break */
+  display: block;
+
+  /* Since these are header elements, darken the color and center-align them  */
+  color: #333;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 2.008652658rem;
+  font-size: 3.25rem;
+}
+
+.author {
+  margin-bottom: .966007417rem;
+  font-size: 1.563rem;
+}
+
+.date {
+  margin-bottom: 0;
+  font-size: 1.563rem;
+}
+
+/* ITEMIZE/ENUMERATION CLASSES */
+ul > li:not(:last-child), ol > li:not(:last-child) {
+  margin-bottom: 1.664rem;
+}
+
+ul.tight > li:not(:last-child), ol.tight > li:not(:last-child) {
+  margin-bottom: calc(1.664rem/1.618/2);
+}
+
+ul+*:not(h1):not(h2), ol+*:not(h1):not(h2) {
+  margin-top: calc(1.664rem*-1.618/2);
+}
+
+.unstyled {
+  list-style: none;
+}
+
+/* Citation Commands */
+cite {
+  font-style: normal;
+}
+
+cite:before {
+  content: "[";
+}
+
+cite:after {
+  content: "]";
+}
+
+/* GRAPHICS */
+/* Reset the shadow DOM on the figure and figure caption classes */
+figure,figcaption {
+  margin: 0;
+  padding: 0;
+}
+
+figure {
+  margin-bottom: calc(1.664rem*1.618);
+  counter-increment: figure-counter;
+}
+
+figcaption {
+  display: inline-block;
+  text-align: center;
+  margin-top: calc(1.563rem/1.618);
+  font-size: 1.563rem;
+  /*font-style: italic;*/
+}
+
+figcaption:before {
+  font-weight: bold;
+  font-style: normal;
+  content: "Figure " counter(section-counter)"."counter(figure-counter) ": ";
+}
+
+img {
+  /* Centers images of any size in all directions by default */
+  display: block;
+  margin: 0 auto;
+  vertical-align: middle;
+
+  /* Prevents the image from overflowing the page width */
+  max-width: 100%;
+
+  /* Some browser magic to make images look better */
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+figure+*:not(h1):not(h2) {
+  margin-top: calc(1.664rem*-1.618/2);
+}
+
+/* Target all left images in the two-up block */
+.two-up > img:nth-of-type(2n+1) {
+  display: inline-block;
+  width: 50%;
+  float: left;
+  padding-right: 1.664rem;
+
+  margin-top: 1.664rem;
+  margin-bottom: 1.664rem;
+}
+
+/* Target all right images in the two-up block */
+.two-up > img:nth-of-type(2n) {
+  display: inline-block;
+  width: 50%;
+  float: left;
+  padding-left: 1.664rem;
+
+  margin-top: 1.664rem;
+  margin-bottom: 1.664rem;
+}
+
+/* Nullifies the top margin of the topmost two images in the block */
+.two-up > img:first-of-type, .two-up > img:nth-of-type(2) {
+  margin-top: 0;
+}
+
+/* Nullifies the bottom margin of the bottommost two images in the block */
+.two-up > img:nth-last-of-type(2), .two-up > img:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Target all leftmost images in the three-up block */
+.three-up > img:nth-of-type(3n+1) {
+  display: inline-block;
+  width: 33.333%;
+  float: left;
+  padding-right: 1.664rem;
+
+  margin-top: calc(2*1.664rem/3);
+  margin-bottom: calc(2*1.664rem/3);
+}
+
+/* Target all middle images in the three-up block */
+.three-up > img:nth-of-type(3n+2) {
+  display: inline-block;
+  width: 33.333%;
+  float: left;
+  padding-left: calc(1.664rem/2);
+  padding-right: calc(1.664rem/2);
+
+  margin-top: calc(2*1.664rem/3);
+  margin-bottom: calc(2*1.664rem/3);
+}
+
+/* Target all rightmost images in the three-up block */
+.three-up > img:nth-of-type(3n) {
+  display: inline-block;
+  width: 33.333%;
+  float: left;
+  padding-left: 1.664rem;
+
+  margin-top: calc(1.664rem*2/3);
+  margin-bottom: calc(2*1.664rem/3);
+}
+
+/* Nullifies the top margin of the topmost three images in the block */
+.three-up > img:first-of-type, .three-up > img:nth-of-type(2), .three-up > img:nth-of-type(3) {
+  margin-top: 0;
+}
+
+/* Nullifies the bottom margin of the bottommost three images in the block */
+.three-up > img:nth-last-of-type(3), .three-up > img:nth-last-of-type(2), .three-up > img:last-of-type {
+  margin-bottom: 0;
+}
+
+.two-column {
+  -webkit-column-count: 2;
+     -moz-column-count: 2;
+          column-count: 2;
+
+  -webkit-column-gap: calc(1.953rem*1.618);
+     -moz-column-gap: calc(1.953rem*1.618);
+          column-gap: calc(1.953rem*1.618);
+
+  margin-bottom: 1.664rem;
+}
